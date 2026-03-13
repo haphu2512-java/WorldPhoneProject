@@ -1,1 +1,66 @@
-# WorldPhoneProject
+# WorldPhoneProject Template
+
+Template fullstack cho dự án bán điện thoại:
+- **Frontend:** React + Vite
+- **Backend:** Spring Boot **dùng Maven** (Java 17)
+- **Database:** MySQL 8
+- **Containerization:** Docker + Docker Compose
+
+## Cấu trúc thư mục
+
+```text
+.
+├── backend/                # Spring Boot Maven project
+├── frontend/               # React Vite project
+├── docker-compose.yml      # Chạy full stack bằng Docker
+└── .env.example
+```
+
+## 1) Chạy local không dùng Docker
+
+### Backend
+```bash
+cd backend
+mvn spring-boot:run
+```
+
+Mặc định backend chạy tại `http://localhost:8080`.
+
+### Frontend
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Mặc định frontend chạy tại `http://localhost:5173`.
+
+## 2) Chạy full bằng Docker Compose
+
+```bash
+docker compose up --build
+```
+
+Sau khi chạy:
+- Frontend: `http://localhost:3000`
+- Backend API: `http://localhost:8080/api/hello`
+- MySQL: `localhost:3306`
+
+## 3) Build riêng từng service
+
+### Backend image
+```bash
+docker build -t worldphone-backend ./backend
+```
+
+### Frontend image
+```bash
+docker build -t worldphone-frontend ./frontend
+```
+
+## 4) Điểm chính của template
+
+- Đã chuyển backend từ **Gradle** sang **Maven** hoàn chỉnh (`pom.xml`).
+- Có sẵn endpoint test: `GET /api/hello`.
+- Đã cấu hình Spring Security cho template để cho phép request public (dễ phát triển ban đầu).
+- Frontend đọc biến `VITE_API_BASE_URL` để linh hoạt môi trường dev/docker.
